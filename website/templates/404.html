@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+
+{% block content %}
+
+<h1 style="color:red" align="center"> This is the Error Page</h1>
+
+<style>
+    .center_image{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+    }
+    .button{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+    }
+</style>
+
+{{errorcode}}
+<br>
+{{errormessage}}
+<br>
+<a href="/" align="center" class="button" ><strong>Return to Home Page</strong></a>
+<br>
+<img class="center_image" src="https://c.tenor.com/JIS_KDKKsgYAAAAd/guaton-computadora.gif" alt="PC Rage" >
+{% endblock %}

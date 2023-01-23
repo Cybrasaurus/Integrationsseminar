@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Kapitelübersicht{% endblock %}
+
+{% block content %}
+
+<h2> Kapitelübersicht</h2>
+<br><br>
+<style>
+    li{
+        margin: 15px 0;
+    }
+    #sublist{
+        margin: 15px 15px;
+    }
+</style>
+<ul id="chapter_list">
+    <li><button class="btn btn-primary" onclick="window.location.href='/chapter_1'">Kapitel 1 - Datenbank anlegen</button></li>
+    <ul id="sublist">
+        <li><button class="btn btn-primary" onclick="window.location.href='/chapter_1_1'">Kapitel 1.1: Warum und wie JSON verarbeiten?</button></li>
+        <li><button class="btn btn-primary" onclick="window.location.href='/chapter_1_2'">Kapitel 1.2: SQL Datenbanken erstellen</button></li>
+    </ul>
+    <li><button class="btn btn-primary" onclick="window.location.href='chapter_2'">Kapitel 2 - JSON ablegen</button></li>
+    <li><button class="btn btn-primary" onclick="window.location.href='chapter_3'">Kapitel 3 - JSON verarbeiten</button></li>
+    <li><button class="btn btn-primary" onclick="window.location.href='chapter_4'">Kapitel 4 - JSON ausgeben</button></li>
+
+</ul>
+
+
+
+{% endblock %}

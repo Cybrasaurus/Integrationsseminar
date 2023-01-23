@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %} 
+
+{% block content %}
+
+
+
+
+
+<h2 align="center">Lehrlektion - relationale Datenbanken und JSON</h2>
+<br>
+
+<div class="row">
+    <div class="column">
+        <h3 align="center">Welcome to the SQLITE and JSON Tutorial</h3>
+        <p>
+            Willkommen zu dieser interaktiven Lehrlektion über die Verarbeitung von JSON in relationalen Datenbanken.
+            Hier werden sie den SQL-Standard $$norm number für die Verarbeitung von JSON lernen können, sowie praktische
+            Beispiele zu der Verarbeitung anhand drei relationalen Datenbanksystemen:
+            <br>
+            - SQLITE <br>
+            - MySQL <br>
+            - MariaDB <br>
+            <br>
+            In der Menüleiste (oben) können sie die wichtigsten Navigationspunkte finden, sonst können sie mit den
+            Knöpfen unten navigieren. <br> <br>
+
+
+            P.S.: Auf manchen Seiten werden sie einen "Sourcecode" Knopf finden. Dort wird ihnen der Python code gezeigt, der
+            verwendet wurde, um die Lehrlektion zu programmieren. Um sich den HTML Quellcode anzuschauen recht-klick und
+            Seitenquelltext anzeigen (STRG + U in chrome). Manchmal werden in dem Quelltext Variablen von Flask/Python übergeben,
+            diese sind durch zwei geschwungene Klammern "{" markiert
+        </p>
+
+    </div>
+    <div class="column" style="background-color:#bbb;">
+        <h3 align="center">Beispiel JSON</h3>
+        <pre id="json">
+            <script>
+                var data = {
+                "data": {
+                    "x": "1",
+                    "y": "1",
+                    "url": "http://url.com"
+                },
+                "event": "start",
+                "show": 1,
+                "id": 50
+                }
+
+
+                document.getElementById("json").innerHTML = JSON.stringify(data, undefined, 2);
+            </script>
+        </pre>
+
+
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="column">
+
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapters'">Kapitelübersicht</button>
+    </div>
+</div>
+<br>
+
+
+{% endblock %}

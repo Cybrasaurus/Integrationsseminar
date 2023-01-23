@@ -1,0 +1,13 @@
+{
+  "Name": "Max Mustermann",
+  "Vorname": "Max",
+  "Nachname": "Mustermann",
+  "Anrede": "Herr",
+  "Titel": null,
+  "Adresse": {
+    "Straße": "Münchnerstraße",
+    "Hausnummer": "27",
+    "PLZ": "74760",
+    "Stadt": "München"
+  }
+}
