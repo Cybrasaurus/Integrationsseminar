@@ -20,6 +20,10 @@ def chapters():
     return render_template("chapter_overview.html")
 
 
+@views.route("/debug_page")
+def debug_page():
+    return render_template("debug_page.html")
+
 
 
 

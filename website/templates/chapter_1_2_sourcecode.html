@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<h2>Sourcecode Datanbanken generien</h2>
+<br>
+<pre>
+    <b><mark> Flask Server</mark></b>
+    {{flask_server_source}}
+
+    <b><mark>SQLITE Datenbank</mark></b> <br>
+    {{sqlite_source}}
+
+    <b><mark>MySQL Datenbank</mark></b> <br>
+    {{mysql_source}}
+
+    <b><mark>MariaDB Datenbank</mark></b> <br>
+    {{mariadb_source}}
+</pre> <br>
+<button class="btn btn-primary" onclick="window.location.href='/chapter_1_2'">Zurück zum Kapitel</button>
+
+
+
+
+{% endblock %}

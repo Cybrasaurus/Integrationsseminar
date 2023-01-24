@@ -3,52 +3,54 @@
 
 {% block content %}
 
-<h2>Kapitel 1.2: Datenbank erstellen</h2>
+<h2 align="center">Kapitel 1.2: Datenbank erstellen</h2>
 <br>
 
 <div class="row">
     <div class="column">
         <h3 align="center">SQL Datenbanken erstellen</h3>
         <p>
-            $$ content
+            Um mit praktischen Beispielen arbeiten zu können, müssen zuerst Datenbanken für die jeweiligen Datenbank-Systeme
+            erstellt werden. Dies kann mit den Buttons auf der rechten Seite gemacht werden. Hier wird zugleich ein
+            "Cursor" erstellt, welcher als Console für die jeweilige Datenbank dient, sodass normale SQL Commands
+            verwendet werden können.
         </p>
+        <button class="btn btn-primary source_code_button" onclick="window.location.href='/chapter_1_2_sourcecode'">Sourcecode</button>
 
     </div>
-    <div class="column" style="background-color:#bbb;">
-        <h3 align="center">$$ content</h3>
-        $$ content
-        </pre>
+
+    <style>
+        .center_buttons{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <div class="column center_buttons" style="background-color:#bbb; border-radius: 15px">
+            <style>
+                .spacing_class{
+                margin-bottom: 5px;
+                }
+            </style>
+            <form method="POST">
+                <button name="create_db" value="sqlite_db" type="submit" class="btn btn-primary spacing_class">SQLITE Datenbank erstellen</button> <br>
+                <button name="create_db" value="mysql_db" type="submit" class="btn btn-primary spacing_class">$$MySQL Datenbank erstellen</button> <br>
+                <button name="create_db" value="maria_db" type="submit" class="btn btn-primary spacing_class">$$MariaDB Datenbank erstellen</button> <br>
+            </form>
+        </div>
 
 
     </div>
-</div>
+
+
 <br>
 
 <br>
-<form method="POST">
 
-    <div class="form-group">
-        <br>
-        <input
-            type="search"
-            class="form-control"
-            id="sample_form"
-            name="sample_form"
-            placeholder="Sample form for INPUT"
-        />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Go</button>
-
-</form>
 
 <div class="row">
-    <div class="column">
-        <p>
-            $$TODO INSERT TEXT ON JSON AS JSON IN SQL VS SPLIT UP IN TEXT
-        </p>
 
-    </div>
 </div>
 
 <br>
