@@ -58,11 +58,11 @@ def generate_name_data(first_name=None, last_name=None, full_name=None, prefix=N
     assert prefix is None or prefix is True, f"Invalid parameter '{prefix}' for parameter prefix, valid options are: [None, True]"
     assert suffix is None or suffix is True, f"Invalid parameter '{suffix}' for parameter suffix, valid options are: [None, True]"
     assert type(
-        gender_distribution) == float, f"Invalid parameter '{suffix}' for parameter suffix, valid options are: floats"
+        gender_distribution) == float, f"Invalid parameter '{gender_distribution}' for parameter suffix, valid options are: floats"
     assert type(
-        prefix_distribution) == float, f"Invalid parameter '{suffix}' for parameter suffix, valid options are: floats"
+        prefix_distribution) == float, f"Invalid parameter '{prefix_distribution}' for parameter suffix, valid options are: floats"
     assert type(
-        suffix_distribution) == float, f"Invalid parameter '{suffix}' for parameter suffix, valid options are: floats"
+        suffix_distribution) == float, f"Invalid parameter '{suffix_distribution}' for parameter suffix, valid options are: floats"
 
     return_dict = {
     }
@@ -141,6 +141,7 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
             gender_distribution = 0.5
             prefix_distribution = 0.2
             suffix_distribution = 0.2
+            # TODO converison of 1 (type integer) passed to float
             with contextlib.suppress(Exception):
                 first_name = name_parameters["first_name"]
             with contextlib.suppress(Exception):
@@ -180,6 +181,7 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
 # end JSON Generator Module
 #TODO handler if JSON directory does not exist yet
 if __name__ == "__main__":
-    Dataset_Generator(iterations=4, name_bool=True, name_parameters={"full_name": True})
+    Dataset_Generator(iterations=4, name_bool=True, name_parameters={"full_name": True, "suffix": True, "prefix": True,
+                                                                     "prefix_distribution": 1.0, "suffix_distribution": 1.0})
 
 
