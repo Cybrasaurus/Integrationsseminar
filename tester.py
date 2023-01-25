@@ -1,14 +1,10 @@
 
+import os
+if os.path.exists("/website/sql_handling/databases") is False:
+    cwd = os.getcwd()
+    print(cwd)
 
-
-with open("reading_test_PY.py", "r") as read_file:
-    text_content = read_file.read()
-
-print(text_content.find("def myfunc():"))
-print(text_content.rfind("#end myfunc():"))
-
-
-print(text_content[27:99])
-
-#print(text_content)
-
+    goal_wd = "\\website\\sql_handling\\databases"
+    full_path = f"{cwd}{goal_wd}"
+    print(full_path)
+    os.mkdir(full_path)

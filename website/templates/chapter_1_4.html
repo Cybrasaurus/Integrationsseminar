@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Kapitel 1.4{% endblock %}
+
+{% block content %}
+<h2 align="center"> Kapitel 1.4: JSON Daten generieren</h2>
+<br>
+<div class="row">
+    <div class="column">
+        <p>Um die Datenbank mit JSON Daten zu befüllen, müssen JSON Daten beschafft werden. Dies könnte man mit existierenden
+        JSON Datensätzen machen, wie z.B. in <a href="https://github.com/jdorfman/awesome-json-datasets" target="_blank" rel="noopener noreferrer">diesem GitHub</a>
+            zu finden sind. Allerdings sind diese Datensätze sehr groß und am Anfang nicht lehrfreundlich, daher werden
+        in dieser Lehrlektion sämtliche JSON Datensätze mithilfe von Python Code und dem Faker Modul generiert.</p>
+        <button class="btn btn-primary source_code_button" onclick="window.location.href='/chapter_1_4_sourcecode'">JSON Generator Sourcecode</button>
+        <br><br>
+        <form method="POST">
+            <button name="gen_json" value="json_basic" class="btn btn-primary button_spacing_bottom" >Einfache JSON</button>
+    </div>
+    <div class="column" style="background-color:#bbb; border-radius: 15px">
+        <p align="center">{{current_JSON}}</p>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_1_3'">Kapitel 1.3</button>
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/error'">Kapitel 1.5 $$TODO</button>
+    </div>
+</div>
+
+
+
+{% endblock %}

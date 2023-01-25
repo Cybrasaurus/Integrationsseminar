@@ -1,12 +1,11 @@
+import sqlite3
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 import logging
+from .functions_other import read_py_and_return_part as rprp
 
 chapter_1 = Blueprint("chapter1", __name__)
 logging.basicConfig(level=logging.INFO)
-
-sqlite_connection = None
-sqlite_cursor = None
-
 
 # Chapter 1------------------------------------------------------------------------------------------------------------
 
@@ -22,18 +21,22 @@ def chapter_1_1():
 
 @chapter_1.route("chapter_1_2", methods=["GET", "POST"])
 def chapter_1_2_create_db():
-    global sqlite_connection
-    global sqlite_cursor
     # chapter handles the creation of SQL Databases
-
+    import os
+    print(os.getcwd())
     if request.method == 'POST':
-        # check which button is pressed
+
+        # check whether directory in which the databases get created exist, if not create it
+        import website.functions_other as f_o
+        if f_o.directory_checker_and_creator("/website/sql_handling/databases") is False:
+            flash("Could not find proper Path, making directory for database", category="success")
+
+        # check which button is pressed, create DB accordingly
         if request.form["create_db"] == "sqlite_db":
             # create SQLITE Database
             from .sql_handling.SQLITE import sqlite_commands as PYsqlite
+            #todo rework return and error handling
             conn_and_cursor = PYsqlite.create_sql_database()
-            sqlite_connection = conn_and_cursor[0]
-            sqlite_cursor = conn_and_cursor[1]
             logging.info("Created SQLITE Database")
             flash("Success, SQLITE Database created", category="success")
 
@@ -47,13 +50,14 @@ def chapter_1_2_create_db():
             logging.error("MariaDB Database not yet implemented")
             flash("Error, MariaDB Database not yet implemented", category="error")
 
+
     return render_template("chapter_1_2.html")
 # end chapter_1_2_create_db()
 
 
 @chapter_1.route("/chapter_1_2_sourcecode")
 def chapter_1_2_sourcecode():
-    from .functions_other import read_py_and_return_part as rprp
+
 
     flask_content = rprp("website/chapter_1.py", "chapter_1_2_create_db()")
     sqlite_content = rprp("website/sql_handling/SQLITE/sqlite_commands.py", "create_sql_database()")
@@ -64,24 +68,112 @@ def chapter_1_2_sourcecode():
                            sqlite_source=sqlite_content, mysql_source=mysql_content, mariadb_source=mariadb_content)
 
 
-@chapter_1.route("/chapter_1_3")
+@chapter_1.route("/chapter_1_3", methods=["GET", "POST"])
 def chapter_1_3():
     # populate Databases with sample table containing text and integer to test functionality
-    if sqlite_cursor is None:
-        flash("Error, no cursor exists yet, type is null")
-    else:
-        sqlite_cursor.executescript("""
-            Drop TABLE if EXISTS tester;
-            
-            CREATE TABLE tester(
-            "Name" TEXT NOT NULL,
-            "Alter" INTEGER NOT NULL)
-        """)
-        sqlite_cursor.execute("INSERT INTO tester VALUES (?,?)", "Max Mustermann", "20")
-        # TODO read in the actual sql commands for the web page
-    # TODO rest of function
-    pass
+
+    if request.method == "POST":
+
+        if request.form["test_db"] == "see_source_code_sqlite":
+            return chapter_1_3_sourcecode_sqlite(db_system="chapter_1_3_sqlite_handling")
+        elif request.form["test_db"] == "see_source_code_mysql":
+            return chapter_1_3_sourcecode_sqlite(db_system="chapter_1_3_mysql_handling")
+        elif request.form["test_db"] == "see_source_code_mariadb":
+            return chapter_1_3_sourcecode_sqlite(db_system="chapter_1_3_mariadb_handling")
+
+        elif request.form["test_db"] == "test_sqlite":
+
+            # chapter_1_3_sqlite_handling()
+            from website.sql_handling.SQLITE.sqlite_commands import sqlite_connection_provider as conn_prov
+
+            sqllite_conn = conn_prov()
+            sqlite_cursor = sqllite_conn[1]
+
+            # wierd formatting due to the view in the gray box otherwise breaking, sees indent as spaces and due
+            # to the html <pre> tag those get displayed, making centering impossible
+            sql_command_create_table = """
+Drop TABLE if EXISTS tester;
+                
+CREATE TABLE tester(
+"Name" TEXT NOT NULL,
+"Alter" INTEGER NOT NULL)
+            """
+            sql_command_fill_table = """
+INSERT INTO tester VALUES ('Max SQLITEmann', 20)
+INSERT INTO tester VALUES ('Max SQLITEmann 2', 22)
+            """
+
+            sqlite_cursor.executescript(sql_command_create_table)
+
+            # note that the actual python statement is slightly different from what a normal SQLITE console would take,
+            # separated by a comma and a list
+            sqlite_cursor.execute("INSERT INTO tester VALUES (?,?)", ["Max SQLITEmann", "20"])
+            sqlite_cursor.execute("INSERT INTO tester VALUES (?,?)", ["Max SQLITEmann 2", "22"])
+
+            # select data from Database
+            sqlite_cursor.execute("""
+                                    SELECT * from tester""")
+            rows = sqlite_cursor.fetchall()
+            db_return_value = ""
+            for row in rows:
+                if db_return_value == "":
+                    db_return_value = row
+                else:
+                    db_return_value = f"{db_return_value} \n {row}"
+
+            return render_template("chapter_1_3.html", sql_command_create_table=sql_command_create_table,
+                                   sql_command_fill_table=sql_command_fill_table, current_db="SQLITE", db_return_value=
+                                   db_return_value)
+            # end chapter_1_3_sqlite_handling()
+        elif request.form["test_db"] == "test_mysql":
+            # chapter_1_3_mysql_handling()
+
+            sql_command_create_table = "$$placeholder" # TODO
+            sql_command_fill_table = "$$placeholder"  # TODO
+            db_return_value = "$$placeholder"  # TODO
+
+            return render_template("chapter_1_3.html", sql_command_create_table=sql_command_create_table,
+                                   sql_command_fill_table=sql_command_fill_table, current_db="MySQL", db_return_value=
+                                   db_return_value)
+            # end chapter_1_3_mysql_handling()
+        elif request.form["test_db"] == "test_mariadb":
+            # chapter_1_3_mariadb_handling()
+
+            sql_command_create_table = "$$placeholder"  # TODO
+            sql_command_fill_table = "$$placeholder"  # TODO
+            db_return_value = "$$placeholder"  # TODO
+
+            return render_template("chapter_1_3.html", sql_command_create_table=sql_command_create_table,
+                                   sql_command_fill_table=sql_command_fill_table, current_db="MariaDB", db_return_value=
+                                   db_return_value)
+            # end chapter_1_3_mariadb_handling()
+
+            # TODO rest of function
+    return render_template("chapter_1_3.html")
 # end chapter_1_3()
 
 
-# TODO chapter 1.3 source code page
+@chapter_1.route("/chapter_1_3_sourcecode_dynamic")
+def chapter_1_3_sourcecode_sqlite(db_system):
+    flask_server_source = rprp("website/chapter_1.py", f"{db_system}()")
+    return render_template("chapter_1_3_sourcecode_dynamic.html", flask_server_source=flask_server_source)
+
+
+@chapter_1.route("chapter_1_4", methods=["GET", "POST"])
+def chapter_1_4():
+    current_JSON=""
+    if request.method == "POST":
+        from website.generate_JSON import Dataset_Generator as gen_J
+        if request.form["gen_json"] == "json_basic":
+            current_JSON = "$$placeholder"
+            json_name_gen_parameters = {
+                "full"
+            }
+            gen_J(iterations=1, name_parameters=)
+
+    return render_template("chapter_1_4.html", current_JSON=current_JSON)
+
+@chapter_1.route("chapter_1_4_sourcecode")
+def chapter_1_4_sourcecode():
+    json_module_content = rprp("website/generate_JSON.py", "JSON Generator Module")
+    return render_template("chapter_1_4_sourcecode.html", json_module_content=json_module_content)

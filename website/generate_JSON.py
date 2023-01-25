@@ -22,6 +22,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+
+# JSON Generator Module
 import logging
 import json
 
@@ -129,7 +131,40 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
 
     for i in range(iterations):
         if name_bool is True:
-            name_data = generate_name_data(name_parameters)
+            import contextlib
+
+            first_name = None
+            last_name = None
+            full_name = None
+            prefix = None
+            suffix = None
+            gender_distribution = 0.5
+            prefix_distribution = 0.2
+            suffix_distribution = 0.2
+            with contextlib.suppress(Exception):
+                first_name = name_parameters["first_name"]
+            with contextlib.suppress(Exception):
+                last_name = name_parameters["last_name"]
+            with contextlib.suppress(Exception):
+                full_name = name_parameters["full_name"]
+            with contextlib.suppress(Exception):
+                prefix = name_parameters["prefix"]
+            with contextlib.suppress(Exception):
+                suffix = name_parameters["suffix"]
+            with contextlib.suppress(Exception):
+                gender_distribution = name_parameters["gender_distribution"]
+            with contextlib.suppress(Exception):
+                prefix_distribution = name_parameters["prefix_distribution"]
+            with contextlib.suppress(Exception):
+                suffix_distribution = name_parameters["suffix_distribution"]
+            name_data = generate_name_data(first_name=first_name,
+                                           last_name=last_name,
+                                           full_name=full_name,
+                                           prefix=prefix,
+                                           suffix=suffix,
+                                           gender_distribution=gender_distribution,
+                                           prefix_distribution=prefix_distribution,
+                                           suffix_distribution=suffix_distribution)
         else:
             name_data = {}
         if address_bool is True:
@@ -141,7 +176,10 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
         dict_to_json = name_data | address_data
         make_json_file(dict_to_json, f"jsons/Dataset{i}")
 
+
+# end JSON Generator Module
+#TODO handler if JSON directory does not exist yet
 if __name__ == "__main__":
-    Dataset_Generator(iterations=2, address_bool=True)
+    Dataset_Generator(iterations=4, name_bool=True, name_parameters={"full_name": True})
 
 
