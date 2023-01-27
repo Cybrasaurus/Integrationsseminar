@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Chapter 1.5{% endblock %}
+
+{% block content %}
+
+
+<h2 align="center">Kapitel 1.5: Beantwortung Hauptfrage</h2>
+<h3 align="center">"Wie werden Tabellen zur Verwaltung von JSON-Objekten angelegt/definiert?"</h3>
+<br>
+
+<div class="row">
+    <div class="column">
+        <p>Um diese Frage zu beantworten zu können, muss jedes SQL-System (SQL ISO Norm, SQLITE, MySQL und MariaDB)
+        getrennt angeschaut werden, da sich zwischen den Systemen unterschiede ergeben. Bevor die Unterschiede zu betrachten
+        sind, gibts es die fundamentale Frage aus <a href="chapter_1_1">Kapitel 1.1</a>, ob JSON Daten aufgeteilt mit
+        standard SQL Datentypen wie <strong>TEXT</strong>, <strong>VARCHAR</strong> und <strong>INTEGER</strong> abgespeichert
+        werden sollen, oder als "ganze" JSON.
+        <br></p>
+        <p>
+        Um den Unterschied zwischen den Systemen mit einem Beispiel darstellen zu können, wird die folgende JSON generiert:
+        </p><form name="json_form" method="POST">
+            <button name="gen_json" value="json_basic" class="btn btn-primary " >Bsp. JSON</button>
+        </form>
+        <br>
+        <h5 align="center">JSON als SQL Datentypen</h5>
+                <style>
+            td{
+                text-align: center;
+                padding: 5px;
+            }
+        </style>
+        <table class="table_border_and_padding" align="center">
+            <form name="sql_datatype_form" method="POST">
+                <tr>
+                    <td>
+                        <button name="sql_datatype" value="sql_datatypes_sql" class="btn btn-primary " >SQL Standard</button>
+                    </td>
+                    <td>
+                        <button name="sql_datatype" value="sql_datatypes_sqlite" class="btn btn-primary " >SQLITE</button>
+                    </td>
+                    <td>
+                        <button name="sql_datatype" value="sql_datatypes_mysql" class="btn btn-primary " >MySQL</button>
+                    </td>
+                    <td>
+                        <button name="sql_datatype" value="sql_datatypes_mariadb" class="btn btn-primary " >MariaDB</button>
+                    </td>
+                </tr>
+            </form>
+
+        </table>
+        <br>
+        <h5 align="center">JSON als "ganze" JSON</h5>
+                <table class="table_border_and_padding" align="center">
+            <form name="whole_json_form" method="POST">
+                <tr>
+                    <td>
+                        <button name="whole_json" value="whole_json_sql" class="btn btn-primary " >SQL Standard</button>
+                    </td>
+                    <td>
+                        <button name="whole_json" value="whole_json_sqlite" class="btn btn-primary " >SQLITE</button>
+                    </td>
+                    <td>
+                        <button name="whole_json" value="whole_json_mysql" class="btn btn-primary " >MySQL</button>
+                    </td>
+                    <td>
+                        <button name="whole_json" value="whole_json_mariadb" class="btn btn-primary " >MariaDB</button>
+                    </td>
+                </tr>
+            </form>
+
+        </table>
+    </div>
+    <div class="column" style="background-color:#bbb; border-radius: 15px">
+        <div>
+            <h4 class="column_margin">{{current_content_title}}</h4>
+            <pre class="column_margin">{{current_JSON}}</pre>
+            <pre class="column_margin">{{sql_commands}}</pre>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_1_4'">Kapitel 1.4</button>
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_2'">Kapitel 2</button>
+    </div>
+</div>
+
+
+{% endblock %}

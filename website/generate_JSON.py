@@ -119,20 +119,71 @@ def generate_adress_data():
     returndict["Adresse"] = tempdict
     return returndict
 
+def country_list(visited_countries: int = 10):
+    returndict = {}
+    templist = []
+
+    for i in range(visited_countries):
+        templist.append(fake.country())
+    returndict["Besuchte Länder"] = templist
+
+    return returndict
+
+
+
+
+
 def make_json_file(input_dict, json_name):
     with open(f"{json_name}.json", "w", encoding="utf-8") as outfile:
         outfile.write(json.dumps(input_dict, indent=2, ensure_ascii=False))
 
 
-def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: bool = False, address_bool: bool = False):
+def make_nested_json(data_per_layer: int = 2, amount_layers: int = 2):
+    returndict = {}
 
-    assert name_bool is True or address_bool is True, "One of the Bools must be true, otherwise there is no data to" \
-                                                     " create a json with"
+    prev_iteration_dict = {}
+
+    nesting_dict = {}
+    import pprint
+    import copy
+    for i in reversed(range(amount_layers)):
+        tempdict = {}
+        for k in range(data_per_layer):
+            if k != (data_per_layer-1):
+                tempdict[f"Layer_{i+1}_Dataset_{k+1}"] = f"Demo Data {k + 1}"
+            else:
+                if i == (amount_layers-1):
+                    pass
+                else:
+                    tempdict["Nesting Here"] = {}
+        print(f"Tempdict: {tempdict}")
+        current_dict = {}
+        print(f"prev_iteration_dict: {prev_iteration_dict}")
+        if prev_iteration_dict == {}:
+            prev_iteration_dict["Nesting Here"] = tempdict
+        else:
+            prev_iteration_dict = copy.deepcopy(prev_iteration_dict)
+            tempdict["Nesting Here"] = copy.deepcopy(prev_iteration_dict)
+            prev_iteration_dict = tempdict
+            print(f"Tempdict after nesting: {tempdict}")
+
+        if i == 0:
+            returndict = copy.deepcopy(tempdict)
+
+    return returndict
+
+
+def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: bool = False, address_bool: bool = False,
+                      pathing: str = "jsons", country_bool: bool = False, country_param: int = 10, nested_bool:bool =
+                      False, nested_parameters:dict = None):
+
+    assert name_bool is True or address_bool is True or country_bool is True or nested_bool is True,\
+        "One of the Bools must be true, otherwise there is no data to create a json with"
 
     for i in range(iterations):
         if name_bool is True:
             import contextlib
-
+            # declare defaults for this parameter
             first_name = None
             last_name = None
             full_name = None
@@ -141,7 +192,8 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
             gender_distribution = 0.5
             prefix_distribution = 0.2
             suffix_distribution = 0.2
-            # TODO converison of 1 (type integer) passed to float
+            # attempt to get parameters from dictionary, if fails the Exception is ignored and the default declared
+            # above gets used
             with contextlib.suppress(Exception):
                 first_name = name_parameters["first_name"]
             with contextlib.suppress(Exception):
@@ -154,10 +206,16 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
                 suffix = name_parameters["suffix"]
             with contextlib.suppress(Exception):
                 gender_distribution = name_parameters["gender_distribution"]
+                if gender_distribution == 0 or gender_distribution == 1:
+                    gender_distribution = float(gender_distribution)
             with contextlib.suppress(Exception):
                 prefix_distribution = name_parameters["prefix_distribution"]
+                if prefix_distribution == 0 or prefix_distribution == 1:
+                    prefix_distribution = float(prefix_distribution)
             with contextlib.suppress(Exception):
                 suffix_distribution = name_parameters["suffix_distribution"]
+                if suffix_distribution == 0 or suffix_distribution == 1:
+                    suffix_distribution = float(suffix_distribution)
             name_data = generate_name_data(first_name=first_name,
                                            last_name=last_name,
                                            full_name=full_name,
@@ -172,16 +230,39 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
             address_data = generate_adress_data()
         else:
             address_data = {}
+        if country_bool is True:
+            country_data = country_list(visited_countries=country_param)
+        else:
+            country_data = {}
+        if nested_bool is True:
+            import contextlib
+            # declare defaults for this parameter
+            data_per_layer = 2
+            amount_layers = 2
+            # attempt to get parameters from dictionary, if fails the Exception is ignored and the default declared
+            # above gets used
+            with contextlib.suppress(Exception):
+                data_per_layer = nested_parameters["data_per_layer"]
+            with contextlib.suppress(Exception):
+                amount_layers = nested_parameters["amount_layers"]
 
-        # TODO other gens
+            nested_data = make_nested_json(data_per_layer=data_per_layer, amount_layers=amount_layers)
+        else:
+            nested_data = {}
+
+        # combine the dictionaries into one dictionary
         dict_to_json = name_data | address_data
-        make_json_file(dict_to_json, f"jsons/Dataset{i}")
+        dict_to_json = dict_to_json | country_data
+        dict_to_json = dict_to_json | nested_data
+        make_json_file(dict_to_json, f"{pathing}/Dataset{i}")
+
+
+
 
 
 # end JSON Generator Module
 #TODO handler if JSON directory does not exist yet
 if __name__ == "__main__":
-    Dataset_Generator(iterations=4, name_bool=True, name_parameters={"full_name": True, "suffix": True, "prefix": True,
-                                                                     "prefix_distribution": 1.0, "suffix_distribution": 1.0})
+    print(make_nested_json(data_per_layer=3, amount_layers=4))
 
 

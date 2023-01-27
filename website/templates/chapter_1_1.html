@@ -9,7 +9,30 @@
 <div class="row">
     <div class="column">
         <p>
-            $$TODO INSERT TEXT ON JSON AS JSON IN SQL VS SPLIT UP IN TEXT
+            Ein Vorteil von JSON ist, dass es einfach zu lesen und zu schreiben ist und es ermöglicht, unstrukturierte
+            Daten zu speichern. Im Folgenden werden die Gründe dargelegt, warum es sinnvoll sein kann, JSON-Objekte in
+            relationalen Datenbanken zu verwenden und wann es besser ist, dies nicht zu tun.<br>
+            <b>Top of Form</b> Es macht Sinn,
+            JSON-Objekte in relationalen Datenbanken zu verwenden, wenn man flexible und unstrukturierte Daten speichern
+            möchte, die sich leicht an veränderte Anforderungen anpassen lassen. Beispielsweise können JSON Felder
+            verwendet werden, um unterschiedliche Eigenschaften von Produkten oder Benutzern zu speichern, die sich im
+            Laufe der Zeit ändern können. Ein weiteres Beispiel wäre das Speichern von Metadaten, die nicht in eine feste
+            Spaltenstruktur passen.
+            <br><br>
+            Es macht jedoch nicht Sinn, JSON-Objekte in relationalen Datenbanken zu verwenden, wenn man hohe Leistung und
+            Skalierbarkeit benötigt. Da JSON Felder in relationalen Datenbanken in der Regel als Text gespeichert werden,
+            kann es zu Leistungsproblemen kommen, wenn man große Mengen an Daten abfragt oder filtert. Außerdem kann es
+            schwierig sein, auf die Daten in JSON Feldern mit SQL zuzugreifen und sie in Berichte und Analysen zu
+            integrieren, da die SQL-Anfragen bei JSON-Dokumenten komplizierter wird. Um Konsistenz und Transparenz zu
+            gewährleisten, sollte sichergestellt werden, dass die Spalte in der die JSON-Dokumente stehen sinnvoll
+            gefüllt sind und nicht als Platzhalter dienen.
+            <br><br>
+            Ein weiterer Faktor zu berücksichtigen ist, dass JSON-Daten in relationalen DBs normalerweise nicht richtig
+            indexiert werden können. Es gibt Lösungen, die es ermöglichen, JSON-Daten in relationalen DBs zu speichern
+            und zu indexieren, aber diese sind in der Regel teurer und komplexer als andere Lösungen.
+            <br><br>
+            Insgesamt ist es wichtig, die Anforderungen an die Daten und die Anwendungsfälle zu berücksichtigen, bevor
+            man entscheidet, ob man JSON-Objekte in relationalen Datenbanken verwenden sollte oder nicht.
         </p>
 
     </div>
@@ -21,7 +44,7 @@
         <button class="btn btn-primary" onclick="window.location.href='/chapter_1'">Kapitel 1</button>
     </div>
     <div class="column">
-        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_1_2'">Kapitel 1.2 $$TODO</button>
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_1_2'">Kapitel 1.2</button>
     </div>
 </div>
 

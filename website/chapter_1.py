@@ -166,14 +166,109 @@ def chapter_1_4():
         from website.generate_JSON import Dataset_Generator as gen_J
         if request.form["gen_json"] == "json_basic":
             current_JSON = "$$placeholder"
+            current_content_title = "Einfache JSON"
             json_name_gen_parameters = {
-                "full"
+                "full_name": True, "suffix": True, "prefix": True,
+                "prefix_distribution": 1.0, "suffix_distribution": 1.0
             }
-            gen_J(iterations=1, name_parameters=)
+            gen_J(iterations=1, name_bool=True, name_parameters=json_name_gen_parameters, pathing="website/jsons")
+            current_JSON = rprp("website/jsons/Dataset0.json", function_name="", json_mode=True)
+            return render_template("chapter_1_4.html", current_JSON=current_JSON,
+                                   current_content_title=current_content_title)
 
-    return render_template("chapter_1_4.html", current_JSON=current_JSON)
+        elif request.form["gen_json"] == "json_with_dict":
+            current_JSON = "$$placeholder"
+            current_content_title = "JSON mit Object"
+            json_name_gen_parameters = {
+                "full_name": True
+            }
+            gen_J(iterations=1, name_bool=True, name_parameters=json_name_gen_parameters, pathing="website/jsons",
+                  address_bool=True)
+            current_JSON = rprp("website/jsons/Dataset0.json", function_name="", json_mode=True)
+            return render_template("chapter_1_4.html", current_JSON=current_JSON,
+                                   current_content_title=current_content_title)
+
+        elif request.form["gen_json"] == "json_with_list":
+            current_JSON = "$$placeholder"
+            json_name_gen_parameters = {
+                "full_name": True
+            }
+            current_content_title = "JSON mit Array"
+            gen_J(iterations=1, name_bool=True, pathing="website/jsons", country_bool=True, country_param=5,
+                  name_parameters=json_name_gen_parameters,)
+            current_JSON = rprp("website/jsons/Dataset0.json", function_name="", json_mode=True)
+            return render_template("chapter_1_4.html", current_JSON=current_JSON,
+                                   current_content_title=current_content_title)
+
+        elif request.form["gen_json"] == "json_with_layers":
+            current_JSON = "$$placeholder"
+            json_name_gen_parameters = {
+                "full_name": True
+            }
+            current_content_title = "JSON mit 4 Ebenen"
+            gen_J(iterations=1, pathing="website/jsons", nested_bool=True, nested_parameters={
+                "data_per_layer": 3, "amount_layers": 4
+            })
+            current_JSON = rprp("website/jsons/Dataset0.json", function_name="", json_mode=True)
+            return render_template("chapter_1_4.html", current_JSON=current_JSON,
+                                   current_content_title=current_content_title)
+    return render_template("chapter_1_4.html")
 
 @chapter_1.route("chapter_1_4_sourcecode")
 def chapter_1_4_sourcecode():
     json_module_content = rprp("website/generate_JSON.py", "JSON Generator Module")
     return render_template("chapter_1_4_sourcecode.html", json_module_content=json_module_content)
+
+
+@chapter_1.route("chapter_1_5", methods=["GET", "POST"])
+def chapter_1_5():
+    # todo add sourcecode for the JSON example
+    # todo json sandbox for playing around
+    # todo maybe sourcecode for the 8 buttons below
+    if request.method == "POST":
+
+        # generate JSON
+        from website.generate_JSON import Dataset_Generator as gen_J
+        if list(request.form.keys())[0] == "gen_json":
+            if request.form["gen_json"] == "json_basic":
+                current_JSON = "$$placeholder"
+                current_content_title = "Beispiel JSON"
+                json_name_gen_parameters = {
+                    "full_name": True
+                }
+                gen_J(iterations=1, name_bool=True, name_parameters=json_name_gen_parameters, pathing="website/jsons")
+                current_JSON = rprp("website/jsons/Dataset0.json", function_name="", json_mode=True)
+                return render_template("chapter_1_5.html", current_JSON=current_JSON,
+                                       current_content_title=current_content_title)
+
+        elif list(request.form.keys())[0] == "sql_datatype":
+            # json as sql datatypes, sql standard
+            if request.form["sql_datatype"] == "sql_datatypes_sql":
+                return render_template("chapter_1_5.html", sql_commands="sql_datatypes_sql")
+            # json as sql datatypes, sqlite
+            elif request.form["sql_datatype"] == "sql_datatypes_sqlite":
+                return render_template("chapter_1_5.html", sql_commands="sql_datatypes_sqlite")
+            # json as sql datatypes, mysql
+            elif request.form["sql_datatype"] == "sql_datatypes_mysql":
+                return render_template("chapter_1_5.html", sql_commands="sql_datatypes_mysql")
+            # json as sql datatypes, mariadb
+            elif request.form["sql_datatype"] == "sql_datatypes_mariadb":
+                return render_template("chapter_1_5.html", sql_commands="sql_datatypes_mariadb")
+
+
+        elif list(request.form.keys())[0] == "whole_json":
+            # json as whole json, sql standard
+            if request.form["whole_json"] == "whole_json_sql":
+                return render_template("chapter_1_5.html", sql_commands="whole_json_sql")
+            # json as whole json, sqlite
+            elif request.form["whole_json"] == "whole_json_sqlite":
+                return render_template("chapter_1_5.html", sql_commands="whole_json_sqlite")
+            # json as whole json, mysql
+            elif request.form["whole_json"] == "whole_json_mysql":
+                return render_template("chapter_1_5.html", sql_commands="whole_json_mysql")
+            # json as whole json, mariadb
+            elif request.form["whole_json"] == "whole_json_mariadb":
+                return render_template("chapter_1_5.html", sql_commands="whole_json_mariadb")
+
+
+    return render_template("chapter_1_5.html")

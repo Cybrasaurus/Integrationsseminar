@@ -1,23 +1,36 @@
-def read_py_and_return_part(path_filename_extension: str, function_name: str):
+import json
+
+
+def read_py_and_return_part(path_filename_extension: str, function_name: str, json_mode: bool = False):
     """
     This function can read most files (used to read python source code in this use case. From the entire python file it
     slices the relevant python functions, given the function name. This requires the function to be ended with a comment:
     "# end function_name"
+    :param json_mode: Deafult False. If this is set to true the function_name parameter does nothing, instead it reads the entier file
     :param path_filename_extension: Path to the file to be read, relative from the current working directory, with file extension
     :param function_name: the name of the function to be sliced
     :return:
     """
-    with open(path_filename_extension, "r") as read_file:
-        text_content = read_file.read()
 
-    left_slice = text_content.find(function_name)
-    right_slice = text_content.rfind(f"# end {function_name}")
+
+    if json_mode is False:
+        with open(path_filename_extension, "r") as read_file:
+            text_content = read_file.read()
+        left_slice = text_content.find(function_name)
+        right_slice = text_content.rfind(f"# end {function_name}")
+        return text_content[left_slice:right_slice]
 
     # todo check for filenotfound error
-    return text_content[left_slice:right_slice]
+    else:
+        with open(path_filename_extension, "r", encoding="utf-8") as read_file:
+            text_content = json.load(read_file)
+            #todo result is not formatted nicely
+
+            text_content = json.dumps(text_content, indent=4, ensure_ascii=False)
+        return text_content
 
 
-def directory_checker_and_creator(directorypath:str):
+def directory_checker_and_creator(directorypath: str):
     """
     This function checks whether a given directory exists within the project, if not it creates said directory and
     returns false. If it already exists it returns true
@@ -35,7 +48,6 @@ def directory_checker_and_creator(directorypath:str):
     else:
         return True
 
+
 if __name__ == "__main__":
     print(read_py_and_return_part("chapter_1.py", "chapter_1_2_create_db()"))
-
-
