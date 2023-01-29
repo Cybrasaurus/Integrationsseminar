@@ -7,7 +7,7 @@
 <div class="row">
     <div class="column">
         <p>Bevor die Datenbanken mit JSON befüllt werden, gibt es hier einen einfachen Check, ob alles funktioniert.
-            Dafür wird ein neuer Table mit zwei Spalten angelegt, falls der Table schon existiert wird er zuerst gedropped.
+            Dafür wird ein neuer Table, namens "tester", mit zwei Spalten angelegt, falls der Table schon existiert wird er zuerst gedropped.
         </p>
         <br>
         <form method="POST">
@@ -28,7 +28,10 @@
         <p align="center"><b>{{current_db}} Table füllen</b></p>
         <pre align="center">{{sql_command_fill_table}}</pre>
 
-        <p align="center"><b>Daten aus {{current_db}} Datenbank</b></p>
+        <p align="center"><b>{{current_db}} Query</b></p>
+        <pre align="center">{{sql_command_query}}</pre>
+
+        <p align="center"><b>{{current_db}} Query Return</b></p>
         <pre align="center">{{db_return_value}}</pre>
     </div>
 </div>

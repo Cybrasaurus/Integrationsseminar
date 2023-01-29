@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<h2 align="center">Kapitel 1.1: Warum und wie JSON verarbeiten?</h2>
+<h2 align="center">Kapitel 1.1: Warum und wie JSON ablegen?</h2>
 <br>
 <div class="row">
     <div class="column">
@@ -12,7 +12,8 @@
             Ein Vorteil von JSON ist, dass es einfach zu lesen und zu schreiben ist und es ermöglicht, unstrukturierte
             Daten zu speichern. Im Folgenden werden die Gründe dargelegt, warum es sinnvoll sein kann, JSON-Objekte in
             relationalen Datenbanken zu verwenden und wann es besser ist, dies nicht zu tun.<br>
-            <b>Top of Form</b> Es macht Sinn,
+            <br>
+            Es macht Sinn,
             JSON-Objekte in relationalen Datenbanken zu verwenden, wenn man flexible und unstrukturierte Daten speichern
             möchte, die sich leicht an veränderte Anforderungen anpassen lassen. Beispielsweise können JSON Felder
             verwendet werden, um unterschiedliche Eigenschaften von Produkten oder Benutzern zu speichern, die sich im
@@ -33,8 +34,22 @@
             <br><br>
             Insgesamt ist es wichtig, die Anforderungen an die Daten und die Anwendungsfälle zu berücksichtigen, bevor
             man entscheidet, ob man JSON-Objekte in relationalen Datenbanken verwenden sollte oder nicht.
+            <br><br>
+            <h4 align="center">Übungsbeispiel</h4>
+            In den folgenden fiktiven Beispielen sollen diese Unterscheidung deutlich werden:
+            <br><br>
+            <strong>1:</strong> Lamborghini benötigt für den Bestellvorgang eines Fahrzeuges die Kundennummer, den Namen, das Geburtsdatum,
+            das bestellte Modell und die IBAN/Visanummer des Kunden. Diese Daten werden in die Datenbank gespeichert,
+            sobald ein Fahrzeug bestellt wird.
+            <br><br>
+            <strong>2:</strong> Der CTO von Lamborghini schlägt vor für den Bestellvorgang auch die Konfiguration des bestellten Fahrzeuges
+            mit aufzunehmen. Diese ist für jedes Fahrzeug individuell und kann sich auch bei gleichem bestelltem Modell unterscheiden.
+            <br><br>
+            In welchem der Beispiele sollten die Daten als ganze JSON-Datei abgespeichert werden und in welchem Beispiel
+            sollten die Daten als zerlegte Datensätze abgespeichert werden?
         </p>
 
+        <h1> Question</h1>
     </div>
 </div>
 

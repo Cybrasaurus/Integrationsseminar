@@ -1,26 +1,49 @@
 {% extends "base.html" %}
-{% block title %}Chapter 1.5{% endblock %}
+{% block title %}Kapitel 1.5{% endblock %}
 
 {% block content %}
 
 
-<h2 align="center">Kapitel 1.5: Beantwortung Hauptfrage</h2>
-<h3 align="center">"Wie werden Tabellen zur Verwaltung von JSON-Objekten angelegt/definiert?"</h3>
+<h2 align="center">Kapitel 1.5: Beantwortung Hauptfragen</h2> <br>
+<h4 align="center">"Wie werden Tabellen zur Verwaltung von JSON-Objekten angelegt/definiert?"</h4>
+<h4 align="center">"In welcher Form (Struktur) können die JSON-Objekte in die relationale Datenbank eingefügt werden?
+    (als komplettes JSON-Objekt bzw. zerlegt als relationale Datensätze)"</h4>
 <br>
 
 <div class="row">
     <div class="column">
         <p>Um diese Frage zu beantworten zu können, muss jedes SQL-System (SQL ISO Norm, SQLITE, MySQL und MariaDB)
-        getrennt angeschaut werden, da sich zwischen den Systemen unterschiede ergeben. Bevor die Unterschiede zu betrachten
+        getrennt angeschaut werden, da sich zwischen den Systemen Unterschiede ergeben. Bevor die Unterschiede zu betrachten
         sind, gibts es die fundamentale Frage aus <a href="chapter_1_1">Kapitel 1.1</a>, ob JSON Daten aufgeteilt mit
         standard SQL Datentypen wie <strong>TEXT</strong>, <strong>VARCHAR</strong> und <strong>INTEGER</strong> abgespeichert
-        werden sollen, oder als "ganze" JSON.
+        werden sollen, oder als "ganze" JSON. Alternativ könnte man die gesamte JSON als String abspeichern, allerdings
+        sind dann queries unmöglich, daher wird diese Möglichkeit für diese Lehrlektion nicht weiter ausgearbeitet.
         <br></p>
         <p>
         Um den Unterschied zwischen den Systemen mit einem Beispiel darstellen zu können, wird die folgende JSON generiert:
-        </p><form name="json_form" method="POST">
-            <button name="gen_json" value="json_basic" class="btn btn-primary " >Bsp. JSON</button>
-        </form>
+        </p>
+        <style>
+            td{
+                text-align: center;
+                padding: 5px;
+            }
+        </style>
+        <table class="table_border_and_padding">
+            <form method="POST">
+                <tr>
+                    <td>
+                        <button name="gen_json" value="json_basic" class="btn btn-primary " >Bsp. JSON</button>
+                    </td>
+                    <td>
+                        <button name="gen_json" value="json_with_numbers" class="btn btn-primary " >$$ JSON mit INT/FLOAT</button>
+                    </td>
+                    <td>
+                        <button name="gen_json" value="json_with_everything" class="btn btn-primary " >$$ JSON mit allen Datentypen</button>
+                    </td>
+                </tr>
+            </form>
+
+        </table>
         <br>
         <h5 align="center">JSON als SQL Datentypen</h5>
                 <style>
@@ -74,7 +97,21 @@
         <div>
             <h4 class="column_margin">{{current_content_title}}</h4>
             <pre class="column_margin">{{current_JSON}}</pre>
+
+            <h4 class="column_margin">{{json_data_sql_data_title}}</h4>
+            <pre class="column_margin">{{json_data_sql_data}}</pre>
+
+            <h4 class="column_margin">{{sql_command_title}}</h4>
             <pre class="column_margin">{{sql_commands}}</pre>
+
+            <h4 class="column_margin">{{sql_insert_title}}</h4>
+            <pre class="column_margin">{{sql_insert}}</pre>
+
+            <h4 class="column_margin">{{sql_query_title}}</h4>
+            <pre class="column_margin">{{sql_query}}</pre>
+
+            <h4 class="column_margin">{{sql_query_result_title}}</h4>
+            <pre class="column_margin">{{sql_query_result}}</pre>
         </div>
     </div>
 </div>

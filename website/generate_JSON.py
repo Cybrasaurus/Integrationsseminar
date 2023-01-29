@@ -156,16 +156,16 @@ def make_nested_json(data_per_layer: int = 2, amount_layers: int = 2):
                     pass
                 else:
                     tempdict["Nesting Here"] = {}
-        print(f"Tempdict: {tempdict}")
+        logging.debug(f"Tempdict: {tempdict}")
         current_dict = {}
-        print(f"prev_iteration_dict: {prev_iteration_dict}")
+        logging.debug(f"prev_iteration_dict: {prev_iteration_dict}")
         if prev_iteration_dict == {}:
             prev_iteration_dict["Nesting Here"] = tempdict
         else:
             prev_iteration_dict = copy.deepcopy(prev_iteration_dict)
             tempdict["Nesting Here"] = copy.deepcopy(prev_iteration_dict)
             prev_iteration_dict = tempdict
-            print(f"Tempdict after nesting: {tempdict}")
+            logging.debug(f"Tempdict after nesting: {tempdict}")
 
         if i == 0:
             returndict = copy.deepcopy(tempdict)
@@ -173,16 +173,28 @@ def make_nested_json(data_per_layer: int = 2, amount_layers: int = 2):
     return returndict
 
 
+def generate_int_and_float(int_bool: bool = True, float_bool: bool = True, int_range_min: int = 0, int_range_max: int
+                           = 100, float_range_min: float = 1, float_range_max: float = 6,
+                           float_numbers_after_comma: int = 1):
+    return_dict = {}
+    import random
+    if int_bool is True:
+        return_dict["Alter"] = random.randint(int_range_min, int_range_max)
+    if float_bool is True:
+        return_dict["Abischnitt"] = round(random.uniform(float_range_min, float_range_max), float_numbers_after_comma)
+
+    return return_dict
+
 def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: bool = False, address_bool: bool = False,
-                      pathing: str = "jsons", country_bool: bool = False, country_param: int = 10, nested_bool:bool =
-                      False, nested_parameters:dict = None):
+                      json_pathing: str = "jsons", country_bool: bool = False, country_param: int = 10, nested_bool:bool =
+                      False, nested_parameters: dict = None, json_file_name: str = "Dataset",
+                      numbers_bool: bool = False, numbers_parameters: dict = None):
 
     assert name_bool is True or address_bool is True or country_bool is True or nested_bool is True,\
         "One of the Bools must be true, otherwise there is no data to create a json with"
-
+    import contextlib
     for i in range(iterations):
         if name_bool is True:
-            import contextlib
             # declare defaults for this parameter
             first_name = None
             last_name = None
@@ -235,7 +247,7 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
         else:
             country_data = {}
         if nested_bool is True:
-            import contextlib
+
             # declare defaults for this parameter
             data_per_layer = 2
             amount_layers = 2
@@ -250,11 +262,51 @@ def Dataset_Generator(iterations: int, name_parameters: dict = None, name_bool: 
         else:
             nested_data = {}
 
+        if numbers_bool is True:
+            """
+            int_bool: bool = True, float_bool: bool = True, int_range_min: int = 0, int_range_max: int
+                           = 100, float_range_min: float = 1, float_range_max: float = 6,
+                           float_numbers_after_comma: int = 1)
+            """
+            int_bool = True
+            float_bool = True
+            int_range_min = 0
+            int_range_max = 100
+            float_range_min = 1
+            float_range_max = 6
+            float_numbers_after_comma = 1
+
+            with contextlib.suppress(Exception):
+                int_bool = numbers_parameters["int_bool"]
+            with contextlib.suppress(Exception):
+                float_bool = numbers_parameters["float_bool"]
+            with contextlib.suppress(Exception):
+                int_range_min = numbers_parameters["int_range_min"]
+            with contextlib.suppress(Exception):
+                int_range_max = numbers_parameters["int_range_max"]
+            with contextlib.suppress(Exception):
+                float_range_min = numbers_parameters["float_range_min"]
+            with contextlib.suppress(Exception):
+                float_range_max = numbers_parameters["float_range_max"]
+            with contextlib.suppress(Exception):
+                float_numbers_after_comma = numbers_parameters["float_numbers_after_comma"]
+
+            numbers_data = generate_int_and_float(int_bool=int_bool, float_bool=float_bool, int_range_min=int_range_min,
+                                                  int_range_max=int_range_max, float_range_min=float_range_min,
+                                                  float_range_max=float_range_max, float_numbers_after_comma=
+                                                  float_numbers_after_comma)
+        else:
+            numbers_data = {}
+
         # combine the dictionaries into one dictionary
         dict_to_json = name_data | address_data
         dict_to_json = dict_to_json | country_data
         dict_to_json = dict_to_json | nested_data
-        make_json_file(dict_to_json, f"{pathing}/Dataset{i}")
+        dict_to_json = dict_to_json | numbers_data
+        if iterations == 1:
+            make_json_file(dict_to_json, f"{json_pathing}/{json_file_name}")
+        else:
+            make_json_file(dict_to_json, f"{json_pathing}/{json_file_name}_{i+1}")
 
 
 

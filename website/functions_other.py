@@ -49,5 +49,16 @@ def directory_checker_and_creator(directorypath: str):
         return True
 
 
+def json_to_list(input_dict):
+    return_list = []
+    for items in input_dict:
+        return_list.append(str(input_dict[items]))
+    return return_list
+
+
 if __name__ == "__main__":
-    print(read_py_and_return_part("chapter_1.py", "chapter_1_2_create_db()"))
+    mydict = {
+          "Vorname": "Margot",
+          "Nachname": "Meyer",
+          "Name": "Margot Meyer"
+        }
