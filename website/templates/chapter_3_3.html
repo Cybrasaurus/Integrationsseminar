@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Kapitel 3.3{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Kapitel 3.3: Änderungen bei kompletten JSON Objekten</h2>
+<br>
+
+<div class="row">
+    <div class="column">
+        <h3 align="center">Daten ändern</h3>
+        <p>
+            Um JSON Daten zu ändern, gibt es drei Befehle. Diese sind in MySQL, SQLITE und MariaDB einheitlich.
+            <br><b>-JSON_SET</b>
+            <br><b>-JSON_INSERT</b>
+            <br><b>-JSON_REPLACE</b>
+            <br> Eine Erklärung der Befehle finden sie unterhalb, in dem grauen Kasten sind Beispiele zur Veranschaulichung.
+            KEY-REPLACEMENT Paare, sowie deren Auswirkung auf die JSON, sind für bessere lesbarkeit farblich markiert.
+        </p>
+        <h5 align="center">JSON_SET</h5>
+        <p>JSON_SET ersetzt an den angegeben Stellen vorhandene Werte, und falls Werte dort nicht existieren, werden diese
+         dort eingefügt.</p>
+        <h5 align="center">JSON_INSERT</h5>
+        <p>JSON_INSERT fügt an den angegeben Stellen Werte ein, falls der Wert noch nicht existiert. Anders als JSON_SET werden
+        keine vorhandenen Werte überschrieben.</p>
+        <h5 align="center">JSON_REPLACE</h5>
+        <p>JSON_REPLACE, das Gegenstück zu JSON_INSERT, ersetzt an den angegebenen Stellen Werte, aber erstellt keine neuen
+        Werte, falls diese noch nicht existieren.</p>
+    </div>
+        <div class="column" style="background-color:#bbb; border-radius: 15px">
+            <h3 align="center">Beispiel JSON</h3>
+            <pre>
+                        {
+                            "Vorname": "Elke",
+                            "Nachname": "Ortmann",
+                            "Name": "Elke Ortmann",
+                            "Alter": 96,
+                            "Abischnitt": 1.5
+                        }</pre>
+            <h3 align="center">JSON_SET</h3>
+            <h5 align="center"> SQL Syntax</h5>
+            <p align="center"><b>
+                JSON_SET(<span style="color: #E18700">[JSON_DATA]</span>, <span style="color: #E18700">[KEY]</span>,
+                 <span style="color: #E18700">[REPLACEMENT]</span>)
+                </b>
+            </p>
+            <h5 align="center"> SQL Syntax Bsp.</h5>
+            <p align="center"><b>
+                JSON_SET(<span style="color: #E18700">JSON_DATA</span>, <span style="color: blue">$.Vorname</span>,
+                 <span style="color: blue">Nele</span>, <span style="color: green">$.Alter</span>,
+                 <span style="color: green">57</span>, <span style="color: red">$.Lieblingszahl</span>,
+                 <span style="color: red">666</span>)
+                </b>
+            </p>
+            <h5 align="center"> JSON nach JSON_SET</h5>
+            <pre>
+                        {
+                            "Vorname": "<b><span style="color: blue">Nele</span></b>",
+                            "Nachname": "Ortmann",
+                            "Name": "Elke Ortmann",
+                            "Alter": <b><span style="color: green">57</span></b>,
+                            <b><span style="color: red">"Lieblingszahl": 666</span></b>,
+                            "Abischnitt": 1.5
+
+                        }</pre>
+
+
+
+
+            <h3 align="center">JSON_INSERT</h3>
+            <h5 align="center"> SQL Syntax</h5>
+            <p align="center"><b>
+                JSON_INSERT(<span style="color: #E18700">[JSON_DATA]</span>, <span style="color: #E18700">[KEY]</span>,
+                 <span style="color: #E18700">[REPLACEMENT]</span>)
+                </b>
+            </p>
+            <h5 align="center"> SQL Syntax Bsp.</h5>
+            <p align="center"><b>
+                JSON_INSERT(<span style="color: #E18700">JSON_DATA</span>, <span style="color: blue">$.Vorname</span>,
+                 <span style="color: blue">Nele</span>, <span style="color: green">$.Alter</span>,
+                 <span style="color: green">57</span>, <span style="color: red">$.Lieblingszahl</span>,
+                 <span style="color: red">666</span>)
+                </b>
+            </p>
+            <h5 align="center"> JSON nach JSON_INSERT</h5>
+            <pre>
+                        {
+                            "Vorname": "Elke",
+                            "Nachname": "Ortmann",
+                            "Name": "Elke Ortmann",
+                            "Alter": 96,
+                            <b><span style="color: red">"Lieblingszahl": 666</span></b>,
+                            "Abischnitt": 1.5
+
+                        }</pre>
+
+
+
+            <h3 align="center">JSON_REPLACE</h3>
+            <h5 align="center"> SQL Syntax</h5>
+            <p align="center"><b>
+                JSON_REPLACE(<span style="color: #E18700">[JSON_DATA]</span>, <span style="color: #E18700">[KEY]</span>,
+                 <span style="color: #E18700">[REPLACEMENT]</span>)
+                </b>
+            </p>
+            <h5 align="center"> SQL Syntax Bsp.</h5>
+            <p align="center"><b>
+                JSON_REPLACE(<span style="color: #E18700">JSON_DATA</span>, <span style="color: blue">$.Vorname</span>,
+                 <span style="color: blue">Nele</span>, <span style="color: green">$.Alter</span>,
+                 <span style="color: green">57</span>, <span style="color: red">$.Lieblingszahl</span>,
+                 <span style="color: red">666</span>)
+                </b>
+            </p>
+            <h5 align="center"> JSON nach JSON_REPLACE</h5>
+            <pre>
+                        {
+                            "Vorname": "<b><span style="color: blue">Nele</span></b>",
+                            "Nachname": "Ortmann",
+                            "Name": "Elke Ortmann",
+                            "Alter": <b><span style="color: green">57</span></b>,
+                            "Abischnitt": 1.5
+
+                        }</pre>
+    </div>
+</div>
+<br>
+
+
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_3_2'">Kapitel 3.2</button>
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_3_4'">Kapitel 3.4</button>
+    </div>
+</div>
+
+{% endblock %}

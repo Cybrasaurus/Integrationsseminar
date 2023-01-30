@@ -18,8 +18,16 @@ def chapter_1_desc():
     return render_template("chapter_1_desc.html")
 
 
-@chapter_1.route("/chapter_1_1")
+@chapter_1.route("/chapter_1_1", methods=["GET", "POST"])
 def chapter_1_1():
+
+    if request.method == 'POST':
+        choice = request.form.getlist('question_choices')
+
+        if choice[0] == "choice_2":
+            flash("Correct, right choice", category="success")
+        else:
+            flash("Wrong Choice, try again", category="error")
     return render_template("chapter_1_1.html")
 
 
@@ -47,12 +55,12 @@ def chapter_1_2_create_db():
         elif request.form["create_db"] == "mysql_db":
             # create MySQL Database
             logging.error("MYSQL Database not yet implemented")
-            flash("Error, MYSQL Database not yet implemented", category="error")
+            flash("Error, MYSQL Database not yet implemented as a OneClick Application", category="error")
 
         elif request.form["create_db"] == "maria_db":
             # create MariaDB Database
             logging.error("MariaDB Database not yet implemented")
-            flash("Error, MariaDB Database not yet implemented", category="error")
+            flash("Error, MariaDB Database not yet implemented as a OneClick Application", category="error")
 
     return render_template("chapter_1_2.html")
 
@@ -64,8 +72,8 @@ def chapter_1_2_create_db():
 def chapter_1_2_sourcecode():
     flask_content = rprp("website/chapter_1.py", "chapter_1_2_create_db()")
     sqlite_content = rprp("website/sql_handling/SQLITE/sqlite_commands.py", "create_sql_database()")
-    mysql_content = "$$PLACEHOLDER"
-    mariadb_content = "$$PLACEHOLDER"
+    mysql_content = "Not Implemented, as this is not yet possible as a oneclick application, MySQL Drivers need to be installed first"
+    mariadb_content = "Not Implemented, as this is not yet possible as a oneclick application, MySQL Drivers need to be installed first"
 
     return render_template("chapter_1_2_sourcecode.html", flask_server_source=flask_content,
                            sqlite_source=sqlite_content, mysql_source=mysql_content, mariadb_source=mariadb_content)
@@ -325,10 +333,10 @@ def chapter_1_5():
 
             # json as sql datatypes, mysql
             elif request.form["sql_datatype"] == "sql_datatypes_mysql":
-                return render_template("chapter_1_5.html", sql_commands="sql_datatypes_mysql")
+                return render_template("chapter_1_5.html", sql_commands="Not yet implementable as a Oneclick-Application")
             # json as sql datatypes, mariadb
             elif request.form["sql_datatype"] == "sql_datatypes_mariadb":
-                return render_template("chapter_1_5.html", sql_commands="sql_datatypes_mariadb")
+                return render_template("chapter_1_5.html", sql_commands="Not yet implementable as a Oneclick-Application")
 
 
         elif list(request.form.keys())[0] == "whole_json":
@@ -366,7 +374,7 @@ def chapter_1_5():
                 html_display_sqlite_commands = sqlite_create_table(tablename="Testing_table", column_data=json_data_sql_data,
                                                                    return_commands_bool=True)
 
-                json_for_database = json.dumps(current_JSON_as_dict)
+                json_for_database = json.dumps(current_JSON_as_dict, ensure_ascii=False)
 
                 html_display_insert_command = sqlite_insert_into_table(table_name="Testing_table",
                                                                        insert_value_list=[json_for_database],
@@ -392,10 +400,10 @@ def chapter_1_5():
                                        )
             # json as whole json, mysql
             elif request.form["whole_json"] == "whole_json_mysql":
-                return render_template("chapter_1_5.html", sql_commands="whole_json_mysql")
+                return render_template("chapter_1_5.html", sql_commands="Not yet implementable as a Oneclick-Application")
             # json as whole json, mariadb
             elif request.form["whole_json"] == "whole_json_mariadb":
-                return render_template("chapter_1_5.html", sql_commands="whole_json_mariadb")
+                return render_template("chapter_1_5.html", sql_commands="Not yet implementable as a Oneclick-Application")
 
     return render_template("chapter_1_5.html")
 

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Kapitel 3.4{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Kapitel 3.4: Löschen bei kompletten JSON Objekten</h2>
+<br>
+
+<div class="row">
+    <div class="column">
+        <h3 align="center">Daten Löschen</h3>
+        <p>
+            Um JSON Daten zu ändern, gibt es den folgenden Befehl: <b>JSON_REMOVE</b> bei allen drei Datenbanksystemen.
+            Die Grundstruktur des Befehls ähnelt den vorherigen befehlen, der erste Parameter ist die JSON, die folgenden
+            Parameter sind die Pfade zu den Daten, die gelöscht werden sollen.
+            <br><br>
+            Bei dem Löschen in JSON arrays ist wichtig zu beachten, dass das Löschen von vorherigen array-Elementen den
+            Suchpfad für das nächste Element beeinflussen kann (siehe Beispiel rechts: Initial ist Besuchte_Länder[2] = "Vereinigtes Königreich",
+            allerdings ist nach dem löschen des ersten Elements des Arrays das "Vereinigtes Königreich" das neue erste Element des Arrays, und
+            "Oman" wird stattdessen gelöscht).
+        </p>
+
+    </div>
+        <div class="column" style="background-color:#bbb; border-radius: 15px">
+            <h3 align="center">Beispiel JSON</h3>
+            <pre>
+                        {
+                            "Vorname": "Gerfried",
+                            "Nachname": "Nette",
+                            "Name": "Gerfried Nette",
+                            "Besuchte_Länder": [
+                                "Honduras",
+                                "Amerikanische Jungferninseln",
+                                "Vereinigtes Königreich",
+                                "Oman",
+                                "Albanien"
+                            ]
+                        }</pre>
+            <h3 align="center">JSON_REMOVE</h3>
+            <h5 align="center"> SQL Syntax</h5>
+            <p align="center"><b>
+                JSON_REMOVE(<span style="color: #E18700">[JSON_DATA]</span>, <span style="color: #E18700">[KEY]</span>...)
+                </b>
+            </p>
+            <h5 align="center"> SQL Syntax Bsp.</h5>
+            <p align="center"><b>
+                JSON_REMOVE(<span style="color: #E18700">JSON_DATA</span>, <span style="color: blue">$.Vorname</span>,
+                 <span style="color: green">$.Besuchte_Länder[1]</span>, <span style="color: red">$.Besuchte_Länder[2]</span>
+                 )
+                </b>
+            </p>
+            <h5 align="center"> JSON nach JSON_SET</h5>
+            <pre>
+                        {
+                            <strike><b><span style="color: blue">"Vorname": "Gerfried"</span></b></strike>,
+                            "Nachname": "Nette",
+                            "Name": "Gerfried Nette",
+                            "Besuchte_Länder": [
+                                "Honduras",
+                                <strike><b><span style="color: green">"Amerikanische Jungferninseln",</span></b></strike>
+                                "Vereinigtes Königreich",
+                                <strike><b><span style="color: red">"Oman",</span></b></strike>
+                                "Albanien"
+                            ]
+
+                        }</pre>
+
+
+
+    </div>
+</div>
+<br>
+
+
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_3_3'">Kapitel 3.3</button>
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_4'">Kapitel 4</button>
+    </div>
+</div>
+
+{% endblock %}

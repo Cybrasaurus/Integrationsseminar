@@ -1,13 +1,17 @@
-{
-  "Name": "Max Mustermann",
-  "Vorname": "Max",
-  "Nachname": "Mustermann",
-  "Anrede": "Herr",
-  "Titel": null,
-  "Adresse": {
-    "Straße": "Münchnerstraße",
-    "Hausnummer": "27",
-    "PLZ": "74760",
-    "Stadt": "München"
-  }
-}
+    {
+        "Hauptdatensatz": {
+            "Name": "Marius Müller",
+            "Urlaubsdaten": {
+                "Besuchte Länder": ["Deutschland", "Frankreich", "Italien"],
+                "Urlaubsziele": [
+                        {"Kontinent":  "Europa",
+                         "Ziel 1": "Spanien",
+                         "Ziel 2": "Schweiz"},
+
+                        {"Kontinent":  "Afrika",
+                         "Ziel 1": "Ägypten",
+                         "Ziel 2": "Sudan"}
+                ]
+            }
+        }
+    }

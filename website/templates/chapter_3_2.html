@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}Kapitel 3.2{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Kapitel 3.2: Abfragen bei kompletten JSON Objekten</h2>
+<br>
+<style>
+                th, td{
+                    padding: 10px;
+                    border: 2px solid black;
+                    border-radius: 10px;
+                }
+</style>
+<div class="row">
+    <div class="column">
+        <h3 align="center">Daten abfragen</h3>
+        <p>
+            Um Daten aus komplett gespeicherten JSON Objekten abzufragen, gibt es den <strong>JSON_EXTRACT</strong> Befehl.
+             Dieser erlaubt es, bestimmte Daten innerhalb der gespeicherten JSON abzufragen. Die Variablen
+            <span style="color: #E18700; background-color:#000000">[COLUMN_NAME]</span>, <span style="color: #E18700; background-color:#000000">[TABLE_NAME]</span> und
+             <span style="color: #E18700; background-color:#000000">[CONDITION]</span> sind wie gehabt Standard SQL Anweisungen, die Besonderheit
+            stellt sich in <span style="color: #E18700; background-color:#000000">[KEYS]</span> da: <br><br>
+
+            Um auf Name/Value (Key-Value) Paare, die in JSON objects to finden sind zuzugreifen, muss in <span style="color: #E18700; background-color:#000000">[KEYS]</span>
+            der Befehl <strong>$.KEY</strong> gegeben werden. Die Abfrage von JSON array Elementen läuft über <strong>$.KEY[N]</strong>.
+            N ist die Stelle des gesuchten Elements in dem JSON array.
+        </p>
+    </div>
+        <div class="column" style="background-color:#bbb; border-radius: 15px">
+            <h4 align="center">allgemeine JSON_EXTRACT Query</h4>
+            <p align="center"><b>SELECT JSON_EXTRACT(<span style="color: #E18700">[COLUMN_NAME], [KEYS]</span>)
+                FROM <span style="color: #E18700">[TABLE_NAME]</span> WHERE <span style="color: #E18700">[CONDITION]</span> </b></p>
+
+            <h4 align="center">Beispiel JSON</h4>
+            <pre>
+                {
+                    "Vorname": "Bekir",
+                    "Nachname": "Vogt",
+                    "Besuchte_Länder": [
+                            "Niue",
+                            "Bermuda",
+                            "Botsuana"
+                        ]
+                    "Verschachtelung_1": {
+                        "Verschachtelung_2": {
+                            "Alter": 37
+                    }
+            </pre>
+            <h4 align="center"><span style="color: #E18700">[KEYS]</span> Beispiele</h4>
+
+            <table align="center">
+                <tr>
+                    <th><strong>Gesuchter Wert</strong></th>
+                    <th><strong>KEY</strong></th>
+                </tr>
+                <tr>
+                    <td>Bekir</td>
+                    <td>$.Vorname</td>
+                </tr>
+                <tr>
+                    <td>Alle besuchten Länder</td>
+                    <td>$.Besuchte_Länder</td>
+                </tr>
+                <tr>
+                    <td>Bermuda</td>
+                    <td>$.Besuchte_Länder[1]</td>
+                </tr>
+                <tr>
+                    <td>37</td>
+                    <td>$.Verschachtelung_1.Verschachtelung_2.Alter</td>
+                </tr>
+            </table>
+            <br>
+    </div>
+</div>
+<br>
+
+<h3 align="center">Übungsaufgabe</h3>
+<p>Gegeben sind JSON in der folgenden Grundstruktur. Die JSONs werden als gesamte JSON in der Tabelle "Urlaub"
+     in der Spalte "JSON_DATA" gespeichert. Eine Beispielsreihe aus der Datenbank ist die Folgende:</p>
+<pre>
+    {
+        "Datensatz_24": {
+            "Name": "Marius Müller",
+            "Urlaubsdaten": {
+                "Besuchte Länder": ["Deutschland", "Frankreich", "Italien"],
+                "Urlaubsziele": [
+                        {"Kontinent":  "Europa",
+                         "Ziel_1": "Spanien",
+                         "Ziel_2": "Schweiz"},
+
+                        {"Kontinent":  "Afrika",
+                         "Ziel_1": "Ägypten",
+                         "Ziel_2": "Sudan"}
+                ]
+            }
+        }
+    }
+</pre>
+<p>Das zweite Ziel (Sudan) in Afrika, in den Urlaubszielen, ist gesucht. <b>Wie lautet die korrekte Query mit JSON_EXTRACT ?</b></p>
+<br>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+
+<form class="form-inline" method="POST">
+  <label for="select_extract">SELECT JSON_EXTRACT(</label>
+  <input type="select_extract" id="select_extract" placeholder="COMMAND" name="select_extract">
+  <label for="table_name">) FROM </label>
+  <input type="table_name" id="table_name" placeholder="TABLE NAME" name="table_name">
+
+  <button type="submit">Submit</button>
+</form>
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_3_1'">Kapitel 3.1</button>
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_3_3'">Kapitel 3.3</button>
+    </div>
+</div>
+
+{% endblock %}

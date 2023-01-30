@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Kapitel 4.1{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Kapitel 4.1: JSON Objekte ausgeben</h2>
+<br>
+
+<div class="row">
+    <div class="column">
+        <h3 align="center">Objekte Ausgeben</h3>
+        <p>
+            Um JSON Daten aus der Datenbank als JSON Objekte auszugeben, gibt es den <b>JSON_OBJECT</b> Befehl. Dieser nimmt
+            eine beliebige Menge an KEY-VALUE Paaren, und fügt diese zu einem JSON Objekt zusammen.
+            Der Befehl lässt sich verschachteln, um verschachtelte JSON Objekte zu generieren. <br><br>
+
+            Um mehrere JSON Objekte in ein JSON Objekt zu kombinieren, gibt es in MariaDB und MySQL den Befehl <b>JSONOBJECTAGG</b>, in
+            SQLITE heißt der equivalente Befehl <b>JSON_GROUP_OBJECT</b>.
+        </p>
+
+    </div>
+        <div class="column" style="background-color:#bbb; border-radius: 15px">
+            <h3 align="center">JSON_OBJECT</h3>
+            <h5 align="center">JSON_Object Syntax</h5>
+            <p align="center"><b>JSON_OBJECT(<span style="color: #E18700">[KEY, VALUE]</span>, ...)</b></p>
+            <h5 align="center">JSON_OBJECT Syntax Beispiel</h5>
+            <p align="center"><b>JSON_OBJECT(<span style="color: #E18700">Vorname, Kevin</span>, <span style="color: blue">Nachname, Müller</span>)</b></p>
+            <h5 align="center">JSON Ergebnis</h5>
+            <pre>
+                        {
+                            <span style="color: #E18700">"Vorname": "Kevin"</span>,
+                            <span style="color: blue">"Nachname": "Müller</span>
+                        }
+            </pre>
+            <h5 align="center">JSON_OBJECT Verschachtelung Syntax Beispiel</h5>
+            <p align="center"><b>JSON_OBJECT(<span style="color: #E18700">Vorname, Kevin</span>, <span style="color: blue">Nachname, Müller</span>,
+                 <span style="color: red">Urlaubsziele, JSON_OBJECT(Ziel_1, Australian, Ziel_2, Neuseeland)</span>)</b></p>
+            <h5 align="center">JSON Ergebnis</h5>
+            <pre>
+                        {
+                            <span style="color: #E18700">"Vorname": "Kevin"</span>,
+                            <span style="color: blue">"Nachname": "Müller</span>,
+                            <span style="color: red">"Urlaubsziele": {
+                                "Ziel_1": "Australian",
+                                "Ziel_2": "Neuseeland"
+                                }</span>
+                        }
+            </pre>
+
+
+
+
+    </div>
+</div>
+<br>
+
+
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_4'">Kapitel 4</button>
+    </div>
+    <div class="column">
+
+    </div>
+</div>
+
+{% endblock %}

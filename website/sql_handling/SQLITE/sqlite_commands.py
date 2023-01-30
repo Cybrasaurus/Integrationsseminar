@@ -80,6 +80,26 @@ def sqlite_query_whole_table(table_name, amount_rows: int = "all", return_pretty
         else:
             return [rows, sqlite_command]
 
+def sqlite_query_json_whole_table(table_name, col_name:str, keys_to_query_in_col:list, amount_rows: int = "all", return_pretty_format: bool = True,
+                             return_list_with_sqlite_command: bool = False,
+                                  ):
+
+    pass
+    cursor = sqlite_connection_provider()[1]
+    # todo sqlite return command in pretty
+
+    json_extract_commands = col_name
+
+    for items in keys_to_query_in_col:
+        json_extract_commands += f", '{items}'"
+
+    print(json_extract_commands)
+
+    rows = cursor.execute(f"""
+        SELECT json_extract({json_extract_commands}) FROM {table_name}
+    """).fetchall()
+
+    print(rows)
 
 def sqlite_create_table(tablename: str, column_data: dict, return_commands_bool: bool = False):
     cursor = sqlite_connection_provider()[1]
@@ -120,7 +140,7 @@ def json_to_sqlite_format(input_json, no_sqlite_type_to_str: bool = True):
     return sqlite_format
 
 
-def json_to_sqlite_json(column_name:str = "JSON Data"):
+def json_to_sqlite_json(column_name:str = "JSON_Data"):
 
     sqlite_format = {}
     sqlite_format[column_name] = "JSON"

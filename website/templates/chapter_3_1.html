@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Kapitel 3.1{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Kapitel 3.1: Abfrage zerteilter JSON Objekte</h2>
+<br>
+
+<div class="row">
+    <div class="column">
+        <h3 align="center">Daten abfragen</h3>
+        <p>
+            Um aufgeteilte JSON Objekte abzufragen, ändern oder zu löschen, müssen diese als SQL-Datentypen abgespeichert werden, wie in
+            <a href="chapter_1_5">Kapitel 1.5</a> unter dem Punkt "<i>JSON als SQL Datentypen</i>" demonstriert. <br><br>
+
+            Dies läuft über normale SQL Queries, die sich zwischen MySQL, SQLITE und MARIADB kaum unterscheiden. Da der
+            Schwerpunkt dieser Lernlektion nicht SQL im allgemeinen, sondern die Verarbeitung von JSON in relationalen
+            Datenbanken ist, wird an dieser Stelle nicht weiter auf die Details von Query Statements eingegangen
+        </p>
+    </div>
+        <div class="column" style="background-color:#bbb; border-radius: 15px">
+            <h4 align="center">Abfragen</h4>
+            <p align="center"><b>SELECT <span style="color: #E18700">[COLUMN_NAMES]</span>
+                FROM <span style="color: #E18700">[TABLE_NAME]</span> WHERE <span style="color: #E18700">[CONDITION]</span> </b></p>
+            <h4 align="center">Ändern</h4>
+            <p align="center"><b>UPDATE <span style="color: #E18700">[TABLE_NAME]</span><br>
+                SET <span style="color: #E18700">[COLUMN_NAME]</span> = <span style="color: #E18700">[VALUE]</span>, ...<br>
+                WHERE
+                <span style="color: #E18700">[CONDITION]</span> </b></p>
+            <h4 align="center">Löschen</h4>
+             <p align="center"><b>DELETE FROM <span style="color: #E18700">[TABLE_NAME]</span>
+                 WHERE <span style="color: #E18700">[CONDITION]</span> </b></p>
+    </div>
+</div>
+<br>
+
+<br>
+<div class="row">
+    <div class="column">
+        <button class="btn btn-primary" onclick="window.location.href='/chapter_3'">Kapitel 3</button>
+    </div>
+    <div class="column">
+        <button class="btn btn-primary" style="float: right" onclick="window.location.href='/chapter_3_2'">Kapitel 3.2</button>
+    </div>
+</div>
+
+{% endblock %}
